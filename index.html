@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>12th Result Congratulations</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Manrope:wght@400;500;700;800&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
         * {
@@ -13,7 +16,7 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Manrope', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #4facfe 75%, #00f2fe 100%);
             background-size: 400% 400%;
             min-height: 100vh;
@@ -26,6 +29,16 @@
             position: relative;
             animation: gradientShift 15s ease infinite;
             padding: 10px 0;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(circle at 15% 20%, rgba(255, 255, 255, 0.2), transparent 35%),
+                        radial-gradient(circle at 85% 80%, rgba(255, 235, 59, 0.18), transparent 38%);
+            pointer-events: none;
+            z-index: 0;
         }
 
         @keyframes gradientShift {
@@ -108,20 +121,58 @@
             }
         }
 
+        /* Flower Animation */
+        .flower {
+            position: fixed;
+            z-index: 1;
+            pointer-events: none;
+            font-size: 30px;
+            opacity: 0.9;
+        }
+
+        @keyframes flowerFloat {
+            0% {
+                transform: translateY(0) translateX(0) rotate(0deg) scale(1);
+                opacity: 1;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-120vh) translateX(var(--tx)) rotate(360deg) scale(0.5);
+                opacity: 0;
+            }
+        }
+
         .container {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 30px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0.08));
+            backdrop-filter: blur(22px);
+            -webkit-backdrop-filter: blur(22px);
+            border-radius: 36px;
             padding: 40px;
             width: 90%;
             max-width: 600px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            border: 2px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 28px 70px rgba(14, 20, 45, 0.38), inset 0 1px 0 rgba(255, 255, 255, 0.28);
+            border: 1px solid rgba(255, 255, 255, 0.28);
             animation: slideIn 0.8s ease-out;
             z-index: 10;
             position: relative;
             max-height: 95vh;
             overflow-y: auto;
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            padding: 1px;
+            background: linear-gradient(140deg, rgba(255, 255, 255, 0.65), rgba(255, 255, 255, 0.08));
+            -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+            mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
         }
 
         @keyframes slideIn {
@@ -141,6 +192,7 @@
         }
 
         .header h1 {
+            font-family: 'Cinzel', serif;
             font-size: clamp(2rem, 5vw, 3.5rem);
             font-weight: 900;
             margin-bottom: 10px;
@@ -176,17 +228,32 @@
         }
 
         .name-section {
-            background: rgba(255, 255, 255, 0.15);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.08));
             padding: 25px;
-            border-radius: 20px;
+            border-radius: 24px;
             margin: 25px 0;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.34);
+            box-shadow: 0 16px 35px rgba(21, 30, 60, 0.22);
+            transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
         }
 
         .name-section:hover {
-            background: rgba(255, 255, 255, 0.2);
-            border-color: rgba(255, 255, 255, 0.5);
+            border-color: rgba(255, 255, 255, 0.6);
+            transform: translateY(-3px);
+            box-shadow: 0 20px 38px rgba(21, 30, 60, 0.3);
+        }
+
+        .name-photo-wrap {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 18px;
+            cursor: pointer;
+        }
+
+        .name-photo-wrap input[type="file"] {
+            display: none;
         }
 
         .name-label {
@@ -223,13 +290,14 @@
         }
 
         .result-card {
-            background: linear-gradient(135deg, rgba(255, 235, 59, 0.2), rgba(255, 107, 107, 0.2));
+            background: linear-gradient(135deg, rgba(255, 235, 59, 0.22), rgba(255, 107, 107, 0.2), rgba(255, 255, 255, 0.08));
             padding: 30px;
-            border-radius: 25px;
+            border-radius: 30px;
             margin: 25px 0;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(16px);
             animation: cardFloat 3s ease-in-out infinite;
+            box-shadow: 0 22px 45px rgba(20, 25, 55, 0.3);
         }
 
         @keyframes cardFloat {
@@ -271,8 +339,14 @@
             margin: 18px auto 0;
             border-radius: 22px;
             border: 10px solid rgba(255, 255, 255, 0.78);
-            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.3), 0 0 40px rgba(255, 235, 59, 0.45);
+            box-shadow: 0 24px 48px rgba(0, 0, 0, 0.34), 0 0 42px rgba(255, 235, 59, 0.5);
             object-fit: cover;
+            transition: transform 0.35s ease, box-shadow 0.35s ease;
+        }
+
+        .result-sheet-visual:hover {
+            transform: translateY(-3px) scale(1.01);
+            box-shadow: 0 28px 55px rgba(0, 0, 0, 0.36), 0 0 48px rgba(255, 235, 59, 0.62);
         }
 
         .percentage-input {
@@ -297,12 +371,12 @@
         }
 
         .photo-card {
-            background: rgba(255, 255, 255, 0.1);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.07));
             padding: 44px;
-            border-radius: 30px;
-            border: 4px solid rgba(255, 255, 255, 0.45);
+            border-radius: 32px;
+            border: 1px solid rgba(255, 255, 255, 0.4);
             text-align: center;
-            transition: all 0.3s ease;
+            transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
             cursor: pointer;
             display: flex;
             flex-direction: column;
@@ -314,10 +388,9 @@
         }
 
         .photo-card:hover {
-            background: rgba(255, 255, 255, 0.15);
             border-color: rgba(255, 255, 255, 0.6);
             transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.34);
         }
 
         .photo-card input[type="file"] {
@@ -346,11 +419,32 @@
             transition: all 0.3s ease;
         }
 
+        .profile-photo {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid gold;
+            box-shadow: 0 0 25px rgba(255, 215, 0, 0.7), 0 12px 28px rgba(0, 0, 0, 0.28);
+            transition: 0.3s ease;
+            image-rendering: auto;
+            transform: translateZ(0);
+        }
+
+        .profile-photo:hover {
+            transform: scale(1.08);
+        }
+
         .photo-preview-circular:hover {
             box-shadow: 0 0 60px rgba(255, 235, 59, 0.9),
                         0 22px 48px rgba(0, 0, 0, 0.4),
                         inset 0 0 28px rgba(255, 255, 255, 0.35);
             transform: scale(1.05);
+        }
+
+        .photo-preview-circular.profile-photo:hover {
+            transform: scale(1.08);
+            box-shadow: 0 0 34px rgba(255, 215, 0, 0.85), 0 16px 32px rgba(0, 0, 0, 0.3);
         }
 
         .photo-upload-hint {
@@ -385,7 +479,7 @@
             font-size: 1rem;
             font-weight: 700;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
             text-transform: uppercase;
             letter-spacing: 1px;
             position: relative;
@@ -455,6 +549,28 @@
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
         }
 
+        .music-toggle {
+            position: fixed;
+            right: 18px;
+            bottom: 18px;
+            z-index: 30;
+            border: 1px solid rgba(255, 255, 255, 0.45);
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.18);
+            color: #fff;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            padding: 10px 14px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            box-shadow: 0 10px 24px rgba(0, 0, 0, 0.25);
+        }
+
+        .music-toggle:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 14px 30px rgba(0, 0, 0, 0.3);
+        }
+
         .footer {
             text-align: center;
             margin-top: 30px;
@@ -463,6 +579,31 @@
             font-size: 1.1rem;
             opacity: 0.95;
             animation: fadeIn 1s ease-out 0.5s backwards;
+        }
+
+        .header,
+        .name-section,
+        .result-card,
+        .photo-card,
+        .buttons-section,
+        .footer {
+            opacity: 0;
+            transform: translateY(18px);
+            animation: fadeUp 0.7s ease forwards;
+        }
+
+        .header { animation-delay: 0.12s; }
+        .name-section { animation-delay: 0.24s; }
+        .result-card { animation-delay: 0.36s; }
+        .photo-card { animation-delay: 0.48s; }
+        .buttons-section { animation-delay: 0.6s; }
+        .footer { animation-delay: 0.72s; }
+
+        @keyframes fadeUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         @keyframes fadeIn {
@@ -680,6 +821,12 @@
 </head>
 <body>
 
+<audio id="bgMusic" autoplay loop preload="auto">
+    <source src="bg-music.mp3" type="audio/mpeg">
+</audio>
+
+<button class="music-toggle" id="musicToggle" type="button">Music On</button>
+
 <div class="container">
     <!-- Header Section -->
     <div class="header">
@@ -690,9 +837,13 @@
 
     <!-- Name Section -->
     <div class="name-section">
-        <div class="name-label">Student Name</div>
+        <div class="name-photo-wrap" onclick="document.getElementById('studentPhoto').click()">
+            <input type="file" id="studentPhoto" accept="image/*">
+            <img id="studentPhotoPreview" class="photo-preview-circular profile-photo" src="image.png" alt="Student photo">
+            <div class="photo-upload-hint">Tap to change photo</div>
+        </div>
         <input type="text" class="name-input" id="studentName" placeholder="Enter your name" value="Atul Angad Zori">
-    </div>
+    </input>
 
     <!-- Result Card -->
     <div class="result-card">
@@ -701,14 +852,6 @@
         <div class="percentage-display" id="percentageDisplay">76.67%</div>
         <input type="number" class="percentage-input" id="percentageInput" placeholder="Enter your percentage" min="0" max="100" step="0.01" value="76.67">
         <img class="result-sheet-visual" src="Result%20Sheet.jpeg" alt="Result sheet">
-    </div>
-
-    <!-- Profile Photo -->
-    <div class="photo-card" onclick="document.getElementById('studentPhoto').click()" style="margin: 0 auto;">
-        <input type="file" id="studentPhoto" accept="image/*">
-        <div class="photo-card-label">📸 Your Photo</div>
-        <img id="studentPhotoPreview" class="photo-preview-circular" src="image.png" alt="Student photo">
-        <div class="photo-upload-hint">Tap to change</div>
     </div>
 
     <!-- Buttons Section -->
@@ -732,6 +875,47 @@
 </div>
 
 <script>
+    const bgMusic = document.getElementById('bgMusic');
+    const musicToggle = document.getElementById('musicToggle');
+
+    bgMusic.volume = 0.45;
+
+    function tryAutoPlayMusic() {
+        const playPromise = bgMusic.play();
+        if (playPromise !== undefined) {
+            playPromise
+                .then(() => {
+                    musicToggle.textContent = 'Music On';
+                })
+                .catch(() => {
+                    musicToggle.textContent = 'Tap For Music';
+                });
+        }
+    }
+
+    function enableMusicOnFirstInteraction() {
+        tryAutoPlayMusic();
+        document.removeEventListener('click', enableMusicOnFirstInteraction);
+        document.removeEventListener('touchstart', enableMusicOnFirstInteraction);
+        document.removeEventListener('keydown', enableMusicOnFirstInteraction);
+    }
+
+    document.addEventListener('click', enableMusicOnFirstInteraction);
+    document.addEventListener('touchstart', enableMusicOnFirstInteraction);
+    document.addEventListener('keydown', enableMusicOnFirstInteraction);
+
+    musicToggle.addEventListener('click', function() {
+        if (bgMusic.paused) {
+            bgMusic.play();
+            musicToggle.textContent = 'Music On';
+        } else {
+            bgMusic.pause();
+            musicToggle.textContent = 'Music Off';
+        }
+    });
+
+    tryAutoPlayMusic();
+
     // Update percentage display in real-time
     document.getElementById('percentageInput').addEventListener('input', function() {
         const value = Math.max(0, Math.min(100, parseInt(this.value) || 0));
@@ -813,6 +997,41 @@
                 setTimeout(() => balloon.remove(), 6000);
             }, i * 200);
         }
+    }
+
+    // Create flowers with duration
+    function createFlowers(duration = 5) {
+        const flowerEmojis = ['🌸', '🌺', '🌼', '🌻', '🌷', '🌹', '💐', '🌾'];
+        const flowerCount = 15;
+        const durationMs = duration * 1000;
+        
+        for (let i = 0; i < flowerCount; i++) {
+            setTimeout(() => {
+                const flower = document.createElement('div');
+                flower.className = 'flower';
+                flower.textContent = flowerEmojis[Math.floor(Math.random() * flowerEmojis.length)];
+                flower.style.left = Math.random() * 100 + '%';
+                flower.style.bottom = '-60px';
+                
+                const randomX = (Math.random() - 0.5) * 200;
+                flower.style.setProperty('--tx', randomX + 'px');
+                
+                const animDuration = (Math.random() * 1.5 + duration - 0.5) + 's';
+                flower.style.animation = `flowerFloat ${animDuration} ease-in forwards`;
+                
+                document.body.appendChild(flower);
+                setTimeout(() => flower.remove(), durationMs + 1000);
+            }, i * 100);
+        }
+    }
+
+    // Celebrate function
+    function celebrate() {
+        createConfetti();
+        createFireworks();
+        createBalloons();
+        createFlowers(5); // 5 second flower effect duration
+        playSuccessAnimation();
     }
 
     // Success animation
