@@ -144,6 +144,157 @@
             }
         }
 
+        /* Welcome Modal */
+        .welcome-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            backdrop-filter: blur(5px);
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .welcome-modal.hidden {
+            display: none;
+        }
+
+        .welcome-content {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.1));
+            backdrop-filter: blur(25px);
+            border-radius: 40px;
+            padding: 50px 40px;
+            text-align: center;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.3);
+            animation: slideUp 0.6s ease-out;
+            max-width: 500px;
+            width: 90%;
+        }
+
+        .welcome-content h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #fff, #ffeb3b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: textGlow 2s ease-in-out infinite;
+        }
+
+        @keyframes textGlow {
+            0%, 100% { filter: drop-shadow(0 0 15px rgba(255, 235, 59, 0.4)); }
+            50% { filter: drop-shadow(0 0 25px rgba(255, 235, 59, 0.7)); }
+        }
+
+        .welcome-content p {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.95);
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .welcome-emojis {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            animation: bounce 1s ease-in-out infinite;
+        }
+
+        .enter-btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 16px 40px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.35s ease;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+            position: relative;
+            overflow: hidden;
+            font-family: 'Manrope', sans-serif;
+        }
+
+        .enter-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .enter-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.6);
+        }
+
+        .enter-btn:hover::before {
+            left: 100%;
+        }
+
+        .enter-btn:active {
+            transform: translateY(-1px);
+        }
+
+        /* Mute/Unmute Button */
+        .music-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.08));
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 600;
+            transition: all 0.35s ease;
+            backdrop-filter: blur(15px);
+            z-index: 50;
+            font-family: 'Manrope', sans-serif;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .music-toggle:hover {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.15));
+            border-color: rgba(255, 255, 255, 0.6);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .music-toggle:active {
+            transform: translateY(0);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
         .container {
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0.08));
             backdrop-filter: blur(22px);
@@ -821,11 +972,21 @@
 </head>
 <body>
 
-<audio id="bgMusic" autoplay loop preload="auto">
+<!-- Welcome Modal -->
+<div class="welcome-modal" id="welcomeModal">
+    <div class="welcome-content">
+        <div class="welcome-emojis">🎊🎉🎊</div>
+        <h1>Welcome to Your Celebration!</h1>
+        <p>Click the button below to start your celebration with music and animations</p>
+        <button class="enter-btn" onclick="enterCelebration()">Enter Celebration</button>
+    </div>
+</div>
+
+<audio id="bgMusic" loop preload="auto">
     <source src="bg-music.mp3" type="audio/mpeg">
 </audio>
 
-<button class="music-toggle" id="musicToggle" type="button">Music On</button>
+<button class="music-toggle" id="musicToggle" type="button">🔊 Music On</button>
 
 <div class="container">
     <!-- Header Section -->
@@ -877,44 +1038,42 @@
 <script>
     const bgMusic = document.getElementById('bgMusic');
     const musicToggle = document.getElementById('musicToggle');
+    const welcomeModal = document.getElementById('welcomeModal');
+    
+    let isMusicPlaying = false;
 
-    bgMusic.volume = 0.45;
+    bgMusic.volume = 0.20; // 20% volume
 
-    function tryAutoPlayMusic() {
-        const playPromise = bgMusic.play();
-        if (playPromise !== undefined) {
-            playPromise
-                .then(() => {
-                    musicToggle.textContent = 'Music On';
-                })
-                .catch(() => {
-                    musicToggle.textContent = 'Tap For Music';
-                });
-        }
+    // Enter celebration - triggered by welcome button
+    function enterCelebration() {
+        welcomeModal.classList.add('hidden');
+        bgMusic.play();
+        isMusicPlaying = true;
+        musicToggle.textContent = '🔊 Music On';
+        
+        // Start animations after music plays
+        setTimeout(() => {
+            createConfetti();
+            createFireworks();
+            createBalloons();
+            createFlowers(5);
+            playSuccessAnimation();
+        }, 100);
     }
 
-    function enableMusicOnFirstInteraction() {
-        tryAutoPlayMusic();
-        document.removeEventListener('click', enableMusicOnFirstInteraction);
-        document.removeEventListener('touchstart', enableMusicOnFirstInteraction);
-        document.removeEventListener('keydown', enableMusicOnFirstInteraction);
-    }
-
-    document.addEventListener('click', enableMusicOnFirstInteraction);
-    document.addEventListener('touchstart', enableMusicOnFirstInteraction);
-    document.addEventListener('keydown', enableMusicOnFirstInteraction);
-
-    musicToggle.addEventListener('click', function() {
-        if (bgMusic.paused) {
-            bgMusic.play();
-            musicToggle.textContent = 'Music On';
-        } else {
+    // Music toggle - mute/unmute
+    musicToggle.addEventListener('click', function(e) {
+        e.stopPropagation();
+        if (isMusicPlaying) {
             bgMusic.pause();
-            musicToggle.textContent = 'Music Off';
+            isMusicPlaying = false;
+            musicToggle.textContent = '🔇 Music Off';
+        } else {
+            bgMusic.play();
+            isMusicPlaying = true;
+            musicToggle.textContent = '🔊 Music On';
         }
     });
-
-    tryAutoPlayMusic();
 
     // Update percentage display in real-time
     document.getElementById('percentageInput').addEventListener('input', function() {
@@ -1057,21 +1216,6 @@
         alert(`🌟 Share this achievement on Instagram!\n\nCaption idea:\n"Grateful for my 12th result! 🎉 ${document.getElementById('percentageInput').value}% achieved through hard work and dedication. Excited for what's next! ✨ #12thResult #Congratulations #ProudMoment #StudentLife #Achievement"`);
         window.open('https://www.instagram.com/', '_blank');
     }
-
-    // Create initial confetti on page load
-    window.addEventListener('load', () => {
-        // Small celebration on load
-        const colors = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#ffeb3b', '#ff6ba6'];
-        for (let i = 0; i < 20; i++) {
-            const confetti = document.createElement('div');
-            confetti.className = 'confetti';
-            confetti.style.left = Math.random() * 100 + 'vw';
-            confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-            confetti.style.animationDuration = (Math.random() * 2 + 3) + 's';
-            document.body.appendChild(confetti);
-            setTimeout(() => confetti.remove(), 6000);
-        }
-    });
 </script>
 
 </body>
