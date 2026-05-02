@@ -244,35 +244,37 @@
             transform: translateY(-1px);
         }
 
-        /* Mute/Unmute Button */
+        /* Mute/Unmute Button (compact circular control) */
         .music-toggle {
             position: fixed;
-            top: 20px;
-            right: 20px;
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.08));
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            color: white;
-            padding: 12px 20px;
-            border-radius: 50px;
+            right: 18px;
+            bottom: 18px;
+            width: 56px;
+            height: 56px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 60;
+            border: none;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #8e7be8, #b66bd9);
+            color: #fff;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             cursor: pointer;
-            font-size: 0.95rem;
-            font-weight: 600;
-            transition: all 0.35s ease;
-            backdrop-filter: blur(15px);
-            z-index: 50;
-            font-family: 'Manrope', sans-serif;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            font-size: 1.25rem;
+            box-shadow: 0 12px 30px rgba(102, 76, 180, 0.35);
+            transition: transform 0.22s ease, box-shadow 0.22s ease, opacity 0.22s ease;
         }
 
         .music-toggle:hover {
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.15));
-            border-color: rgba(255, 255, 255, 0.6);
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            transform: translateY(-4px) scale(1.03);
+            box-shadow: 0 16px 36px rgba(102, 76, 180, 0.45);
+            opacity: 0.98;
         }
 
         .music-toggle:active {
-            transform: translateY(0);
+            transform: translateY(-1px) scale(0.99);
         }
 
         @keyframes fadeIn {
@@ -700,27 +702,7 @@
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
         }
 
-        .music-toggle {
-            position: fixed;
-            right: 18px;
-            bottom: 18px;
-            z-index: 30;
-            border: 1px solid rgba(255, 255, 255, 0.45);
-            border-radius: 999px;
-            background: rgba(255, 255, 255, 0.18);
-            color: #fff;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            padding: 10px 14px;
-            font-size: 0.9rem;
-            cursor: pointer;
-            box-shadow: 0 10px 24px rgba(0, 0, 0, 0.25);
-        }
-
-        .music-toggle:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 14px 30px rgba(0, 0, 0, 0.3);
-        }
+        
 
         .footer {
             text-align: center;
@@ -986,7 +968,7 @@
     <source src="bg-music.mp3" type="audio/mpeg">
 </audio>
 
-<button class="music-toggle" id="musicToggle" type="button">🔊 Music On</button>
+<button class="music-toggle" id="musicToggle" type="button" aria-pressed="false" title="Play music">🔈</button>
 
 <div class="container">
     <!-- Header Section -->
@@ -1049,7 +1031,9 @@
         welcomeModal.classList.add('hidden');
         bgMusic.play();
         isMusicPlaying = true;
-        musicToggle.textContent = '🔊 Music On';
+        musicToggle.innerHTML = '🔊';
+        musicToggle.title = 'Pause music';
+        musicToggle.setAttribute('aria-pressed', 'true');
         
         // Start animations after music plays
         setTimeout(() => {
@@ -1067,11 +1051,15 @@
         if (isMusicPlaying) {
             bgMusic.pause();
             isMusicPlaying = false;
-            musicToggle.textContent = '🔇 Music Off';
+            musicToggle.innerHTML = '🔇';
+            musicToggle.title = 'Play music';
+            musicToggle.setAttribute('aria-pressed', 'false');
         } else {
             bgMusic.play();
             isMusicPlaying = true;
-            musicToggle.textContent = '🔊 Music On';
+            musicToggle.innerHTML = '🔊';
+            musicToggle.title = 'Pause music';
+            musicToggle.setAttribute('aria-pressed', 'true');
         }
     });
 
