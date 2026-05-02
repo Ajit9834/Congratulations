@@ -247,10 +247,10 @@
         /* Mute/Unmute Button (compact circular control) */
         .music-toggle {
             position: fixed;
-            right: 14px;
-            bottom: 14px;
-            width: 44px;
-            height: 44px;
+            right: 24px;
+            bottom: 24px;
+            width: 40px;
+            height: 40px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -262,8 +262,11 @@
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
             cursor: pointer;
-            font-size: 1rem;
-            box-shadow: 0 10px 24px rgba(102, 76, 180, 0.30);
+            font-size: 0.95rem;
+            box-shadow: 0 8px 20px rgba(102, 76, 180, 0.28);
+            overflow: hidden;
+            padding: 0;
+            line-height: 1;
             transition: transform 0.22s ease, box-shadow 0.22s ease, opacity 0.22s ease;
         }
 
@@ -284,7 +287,18 @@
                 right: 10px;
                 bottom: auto;
                 top: 10px;
-                font-size: 0.9rem;
+                font-size: 0.85rem;
+            }
+        }
+
+        /* Desktop tweak: make sure control never expands into large lane */
+        @media (min-width: 1024px) {
+            .music-toggle {
+                right: 28px;
+                bottom: 28px;
+                width: 40px;
+                height: 40px;
+                font-size: 1rem;
             }
         }
 
