@@ -279,12 +279,22 @@
 
         @media (max-width: 480px) {
             .music-toggle {
-                width: 40px;
-                height: 40px;
+                width: 36px;
+                height: 36px;
                 right: 10px;
-                bottom: 10px;
-                font-size: 0.95rem;
+                bottom: auto;
+                top: 10px;
+                font-size: 0.9rem;
             }
+        }
+
+        /* Prevent any pseudo-elements or accidental large styling from creating a tall lane */
+        .music-toggle::before,
+        .music-toggle::after,
+        #musicToggle::before,
+        #musicToggle::after {
+            display: none !important;
+            content: none !important;
         }
 
         @keyframes fadeIn {
